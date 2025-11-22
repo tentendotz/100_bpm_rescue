@@ -43,3 +43,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# environment variable files
+.env
+.envrc
+
+# Node.js dependencies
+node_modules/
+
+# npm generate output
+dist
+
+# Optional npm cache directory
+.npm

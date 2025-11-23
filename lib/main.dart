@@ -5,9 +5,10 @@ import 'package:hackathon_app/presentation/view/components/bottom_nav.dart';
 import 'package:hackathon_app/presentation/view/components/common_button.dart';
 import 'package:hackathon_app/presentation/view/components/common_textfield.dart';
 import 'package:hackathon_app/presentation/view/model/bottom_nav_item_model.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

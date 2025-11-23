@@ -9,6 +9,10 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  plugins:
+    - custom_lint
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -25,6 +29,14 @@ linter:
     - annotate_overrides
     - discarded_futures
     - unawaited_futures
+
+custom_lint:
+  enable_all_lint_rules: false
+  rules:
+    - missing_provider_scope
+    - functional_ref
+    - notifier_extends
+    - notifier_build
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

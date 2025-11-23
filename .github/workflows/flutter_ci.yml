@@ -20,5 +20,9 @@ jobs:
       - name: Install packages
         run: flutter pub get
 
-      - name: Linter
+      - name: Flutter lint
         run: flutter analyze
+
+      - name: Riverpod lint
+        run: dart run custom_lint
+

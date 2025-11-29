@@ -31,7 +31,7 @@ abstract class AppRouters {
         builder: (context, state) {
           // TODO　ゲーム画面から行った回数と計測時間を渡す
           // spendTimeはデフォルト値に60が入っているので必要な時だけ追加する
-          final countNum = 100;
+          final (spendTime, countNum) = state.extra as (int, int);
           return ResultPage(countNum: countNum);
         },
       ),

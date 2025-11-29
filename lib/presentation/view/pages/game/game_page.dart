@@ -19,31 +19,41 @@ class _GamePageState extends State<GamePage> {
   static const double _optimalBpm = 120;
   late final ShakeManager _shakeManager;
   late final HeartbeatWaveController _heartbeatController;
+  late final CountdownManager _countdownManager;
 
   @override
   void initState() {
     super.initState();
     _heartbeatController = HeartbeatWaveController();
     _shakeManager = ShakeManager(controller: _heartbeatController);
+
+    // ゲーム開始（initStateで一度だけ呼ぶ）
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _countdownManager = CountdownManager(
+        // TODO　↓countNumに現在の押した回数を入れる
+        onFinished: () => context.go(
+          AppRoutes.result,
+          extra: {'spendTime': 60, 'countNum': 90},
+        ),
+        // TODO　↓countNumに現在の押した回数を入れる
+        onForcedStop: (remainingSeconds) => context.go(
+          AppRoutes.result,
+          extra: {'spendTime': remainingSeconds, 'countNum': 100},
+        ),
+      );
+      _countdownManager.start();
+      _shakeManager.gameStart();
+    });
+  }
+
+  @override
+  void dispose() {
+    _shakeManager.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final CountdownManager countdownManager = CountdownManager(
-      // TODO　↓extraの90に現在の押した回数を入れる
-      onFinished: () => context.go(AppRoutes.result, extra: (60, 90)),
-      // TODO　↓extraの100に現在の押した回数を入れる
-      onForcedStop: (remainingSeconds) =>
-          context.go(AppRoutes.result, extra: (remainingSeconds, 100)),
-    );
-
-    void gameStart() {
-      countdownManager.start();
-    }
-
-    gameStart();
-    _shakeManager.gameStart();
-
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -61,19 +71,19 @@ class _GamePageState extends State<GamePage> {
             ),
             // 右側: deepSpaceBlue色のボックス
             Expanded(
-                child: Container(
-                  color: AppColors.deepSpaceBlue,
-                  child: const Center(
-                    child: Text(
-                      'ここに手をおいてね！',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+              child: Container(
+                color: AppColors.deepSpaceBlue,
+                child: const Center(
+                  child: Text(
+                    'ここに手をおいてね！',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+              ),
             ),
           ],
         ),

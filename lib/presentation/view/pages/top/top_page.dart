@@ -49,7 +49,7 @@ class _TopPageState extends State<TopPage> {
                   const Text(
                     'たのしくリズムにのって、いのちをまもろう！',
                     style: TextStyle(
-                      fontSize: AppSize.xl,
+                      fontSize: AppSize.md,
                       color: AppColors.subtitleGray,
                     ),
                   ),

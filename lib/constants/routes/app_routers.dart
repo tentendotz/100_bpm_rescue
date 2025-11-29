@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:hackathon_app/constants/routes/app_routes.dart';
 import 'package:hackathon_app/presentation/view/pages/game/game_page.dart';
+import 'package:hackathon_app/presentation/view/pages/guide/grip_guide_page.dart';
 import 'package:hackathon_app/presentation/view/pages/guide/guide_page.dart';
 import 'package:hackathon_app/presentation/view/pages/ready/ready_page.dart';
 import 'package:hackathon_app/presentation/view/pages/result/result_page.dart';
@@ -42,6 +43,10 @@ abstract class AppRouters {
       GoRoute(
         path: AppRoutes.guide,
         builder: (context, state) => const GuidePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.gripGuide,
+        builder: (context, state) => const GripGuidePage(),
       ),
     ],
   );

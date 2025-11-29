@@ -72,16 +72,15 @@ class GuidePage extends StatelessWidget {
               right: AppSize.zero,
               bottom: AppSize.sm,
               child: CommonButton(
-                //bgColor: AppColors.strawberryRed,
                 children: const Text(
-                  'もどる',
+                  'もちかたへ',
                   style: TextStyle(
                     fontSize: AppSize.md,
                     color: AppColors.accentColor,
                   ),
                 ),
                 tapFunc: () {
-                  context.go(AppRoutes.top);
+                  context.go(AppRoutes.gripGuide);
                 },
               ),
             ),

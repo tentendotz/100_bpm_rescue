@@ -10,10 +10,7 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Heartbeat Wave Demo',
-      theme: ThemeData.light(),
-      home: Scaffold(
+    return Scaffold(
         body: SafeArea(
           child: Row(
             children: [
@@ -46,7 +43,6 @@ class GamePage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

@@ -8,10 +8,21 @@ import 'package:hackathon_app/presentation/view_model/game/game_timer.dart';
 ///
 /// ゲーム画面
 ///
-class GamePage extends StatelessWidget {
+class GamePage extends StatefulWidget {
   const GamePage({super.key});
-  final double optimalBpm = 120;
+@override
+  State<GamePage> createState() => _GamePageState();
+}
 
+class _GamePageState extends State<GamePage> {
+  static const double _optimalBpm = 120;
+  late final HeartbeatWaveController _heartbeatController;
+
+  @override
+  void initState() {
+    super.initState();
+    _heartbeatController = HeartbeatWaveController();
+  }
   @override
   Widget build(BuildContext context) {
     final CountdownManager countdownManager = CountdownManager(
@@ -37,13 +48,19 @@ class GamePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: HeartbeatWave(
-                  bpm: optimalBpm,
+                  bpm: _optimalBpm,
                   waveColor: AppColors.azureBlue,
+                  controller: _heartbeatController,
                 ),
               ),
             ),
             // 右側: deepSpaceBlue色のボックス
             Expanded(
+              child: GestureDetector(
+                  onTap: () {
+                    debugPrint('Hand placement area tapped');
+                    _heartbeatController.triggerPulse();
+                  },
               child: Container(
                 color: AppColors.deepSpaceBlue,
                 child: const Center(
@@ -57,6 +74,7 @@ class GamePage extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
             ),
           ],
         ),

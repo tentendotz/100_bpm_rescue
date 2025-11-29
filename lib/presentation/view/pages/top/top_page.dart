@@ -93,7 +93,7 @@ class _TopPageState extends State<TopPage> {
                       ),
                     ),
                     tapFunc: () {
-                      context.go(AppRoutes.result);
+                      context.go(AppRoutes.guide);
                     },
                   ),
 

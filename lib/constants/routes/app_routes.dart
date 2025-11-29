@@ -7,4 +7,5 @@ abstract class AppRoutes {
   static const game = '/game';
   static const result = '/result';
   static const setting = '/setting';
+  static const guide = '/guide';
 }

@@ -10,7 +10,6 @@ import 'package:hackathon_app/presentation/view/model/bottom_nav_item_model.dart
 ///
 /// トップ画面
 ///
-
 class TopPage extends StatefulWidget {
   const TopPage({super.key});
   @override

@@ -1,9 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:hackathon_app/constants/routes/app_routes.dart';
-import 'package:hackathon_app/presentation/view/pages/game/main.dart';
-import 'package:hackathon_app/presentation/view/pages/result/main.dart';
-import 'package:hackathon_app/presentation/view/pages/setting/main.dart';
-import 'package:hackathon_app/presentation/view/pages/top/main.dart';
+import 'package:hackathon_app/presentation/view/pages/game/game_page.dart';
+import 'package:hackathon_app/presentation/view/pages/ready/ready_page.dart';
+import 'package:hackathon_app/presentation/view/pages/result/result_page.dart';
+import 'package:hackathon_app/presentation/view/pages/setting/setting_page.dart';
+import 'package:hackathon_app/presentation/view/pages/top/top_page.dart';
 
 ///
 /// アプリの画面遷移を定義するクラス
@@ -15,6 +16,10 @@ abstract class AppRouters {
       GoRoute(
         path: AppRoutes.top,
         builder: (context, state) => const TopPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.ready,
+        builder: (context, state) => const ReadyPage(),
       ),
       GoRoute(
         path: AppRoutes.game,

@@ -22,5 +22,5 @@ abstract final class AppSize {
   static const double defaultInputHeight = 40.0;
 
   // 結果画面のタイトルのサイズ
-  static const double resultTitleTextSize = 48.0;
+  static const double resultTitleTextSize = 36.0;
 }

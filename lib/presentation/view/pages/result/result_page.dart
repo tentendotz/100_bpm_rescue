@@ -9,9 +9,12 @@ import 'package:hackathon_app/presentation/view/components/common_button.dart';
 /// ゲームの結果画面
 ///
 class ResultPage extends StatelessWidget {
-  const ResultPage({super.key, this.isFailed = true});
+  const ResultPage({super.key, required this.countNum, this.spendTime = 60});
 
-  final bool isFailed;
+  final int countNum;
+  final int spendTime;
+
+  bool get _isFailed => spendTime != 60;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,27 @@ class ResultPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              isFailed ? 'ざんねん！' : 'よくできました！',
-              style: TextStyle(fontSize: AppSize.resultTitleTextSize),
+              _isFailed ? 'ざんねん！' : 'よくできました！',
+              style: TextStyle(
+                fontSize: AppSize.resultTitleTextSize,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            SizedBox(
+              width: (MediaQuery.of(context).size.width / 2) - AppSize.lg,
+              height: (MediaQuery.of(context).size.height / 2) - AppSize.xl,
+              child: Image.asset(
+                scale: 1.0,
+                _isFailed
+                    ? 'assets/images/chara/cat_failed.png'
+                    : 'assets/images/chara/cat_success.png',
+              ),
+            ),
+            Text('1分間に$countNum回', style: TextStyle(fontSize: AppSize.xm)),
+            // TODO　「でもよくがんばりました！」ではなく、遅すぎる/早すぎるに変更できるようにする
             Text(
-              isFailed ? 'でもよくがんばりました！' : 'すばらしいです！',
-              style: TextStyle(fontSize: AppSize.xm),
+              _isFailed ? 'でもよくがんばりました！' : 'すばらしいです！',
+              style: TextStyle(fontSize: AppSize.md),
             ),
             SizedBox(height: AppSize.sm),
             Row(
@@ -43,19 +61,27 @@ class ResultPage extends StatelessWidget {
               children: [
                 CommonButton(
                   bgColor: AppColors.azureBlue,
-                  children: Text(
-                    'もう一度',
-                    style: TextStyle(color: AppColors.accentColor),
+                  children: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    spacing: AppSize.xxs,
+                    children: [
+                      Icon(Icons.replay_outlined, color: AppColors.accentColor),
+                      Text(
+                        'もう一回',
+                        style: TextStyle(color: AppColors.accentColor),
+                      ),
+                    ],
                   ),
                   tapFunc: () {
-                    context.go(AppRoutes.top);
+                    context.go(AppRoutes.game);
                   },
                 ),
                 CommonButton(
-                  bgColor: AppColors.strawberryRed,
+                  bgColor: AppColors.accentColor,
                   children: Text(
                     'トップへ',
-                    style: TextStyle(color: AppColors.accentColor),
+                    style: TextStyle(color: AppColors.deepSpaceBlue),
                   ),
                   tapFunc: () {
                     context.go(AppRoutes.top);

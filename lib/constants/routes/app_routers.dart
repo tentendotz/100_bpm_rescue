@@ -27,7 +27,12 @@ abstract class AppRouters {
       ),
       GoRoute(
         path: AppRoutes.result,
-        builder: (context, state) => const ResultPage(),
+        builder: (context, state) {
+          // TODO　ゲーム画面から行った回数
+          // 失敗時の計測時間を取得する
+          final countNum = 120;
+          return ResultPage(countNum: countNum);
+        },
       ),
       GoRoute(
         path: AppRoutes.setting,

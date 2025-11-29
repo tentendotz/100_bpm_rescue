@@ -21,6 +21,6 @@ abstract final class AppSize {
   // 入力欄のデフォルトの高さ
   static const double defaultInputHeight = 40.0;
 
-  // 結果画面のタイトルのサイズ
-  static const double resultTitleTextSize = 36.0;
+  // タイトルのサイズ
+  static const double titleTextSize = 36.0;
 }

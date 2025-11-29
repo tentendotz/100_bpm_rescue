@@ -35,7 +35,7 @@ class ResultPage extends StatelessWidget {
             Text(
               resultCalc.calcResultToString(),
               style: TextStyle(
-                fontSize: AppSize.resultTitleTextSize,
+                fontSize: AppSize.titleTextSize,
                 fontWeight: FontWeight.bold,
               ),
             ),

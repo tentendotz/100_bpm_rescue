@@ -7,12 +7,17 @@ import 'dart:ui';
 class CountdownManager {
   Timer? _timer;
 
-  CountdownManager({required this.onFinished, required this.onForcedStop});
+  CountdownManager({
+    required this.onFinished,
+    required this.onForcedStop,
+    required this.onTick,
+  });
 
   final int initialDuration = 60;
   int _currentCount = 60;
   final VoidCallback onFinished;
   final Function(int remainingSeconds) onForcedStop;
+  final Function(int currentCount)? onTick;
 
   void dispose() {
     _timer?.cancel();
@@ -26,6 +31,7 @@ class CountdownManager {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_currentCount > 0) {
         _currentCount--;
+        onTick?.call(_currentCount);
       } else {
         dispose();
         onFinished();

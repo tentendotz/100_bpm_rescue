@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hackathon_app/constants/app_size.dart';
@@ -21,12 +23,37 @@ class _GamePageState extends State<GamePage> {
   late final ShakeManager _shakeManager;
   late final HeartbeatWaveController _heartbeatController;
   late final CountdownManager _countdownManager;
+  int _countDown = 0;
+
+  void isSuccess() {
+    setState(() {
+      _countDown++;
+    });
+  }
+
+  void checkCondition(int currentTime) {
+    if (!mounted) return;
+
+    if (currentTime <= 40 && _countDown == 0) {
+      _countdownManager.stopAndFinish();
+    }
+  }
+
+  void navigateToResult(int remainingSeconds) {
+    if (mounted) {
+      context.go(AppRoutes.result, extra: (remainingSeconds, _countDown));
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+
     _heartbeatController = HeartbeatWaveController();
-    _shakeManager = ShakeManager(controller: _heartbeatController);
+    _shakeManager = ShakeManager(
+      controller: _heartbeatController,
+      successFunc: isSuccess,
+    );
 
     // ゲーム開始（initStateで一度だけ呼ぶ）
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -34,13 +61,14 @@ class _GamePageState extends State<GamePage> {
         // TODO　↓countNumに現在の押した回数を入れる
         onFinished: () => context.go(
           AppRoutes.result,
-          extra: {'spendTime': 60, 'countNum': 90},
+          extra: {'spendTime': 60, 'countNum': _countDown},
         ),
         // TODO　↓countNumに現在の押した回数を入れる
         onForcedStop: (remainingSeconds) => context.go(
           AppRoutes.result,
-          extra: {'spendTime': remainingSeconds, 'countNum': 100},
+          extra: {'spendTime': remainingSeconds, 'countNum': _countDown},
         ),
+        onTick: checkCondition,
       );
       _countdownManager.start();
       _shakeManager.gameStart();
@@ -48,8 +76,8 @@ class _GamePageState extends State<GamePage> {
   }
 
   @override
-  Future<void> dispose() async {
-    await _shakeManager.dispose();
+  void dispose() {
+    unawaited(_shakeManager.dispose());
     super.dispose();
   }
 

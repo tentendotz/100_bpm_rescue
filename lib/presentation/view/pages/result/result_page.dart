@@ -45,7 +45,6 @@ class ResultPage extends StatelessWidget {
               child: Image.asset(scale: 1.0, resultCalc.calcResultImage()),
             ),
             Text('1分間に$countNum回', style: TextStyle(fontSize: AppSize.xm)),
-            // TODO　「でもよくがんばりました！」ではなく、遅すぎる/早すぎるに変更できるようにする
             Text(
               resultCalc.calcResultDetailToString(),
               style: TextStyle(fontSize: AppSize.md),

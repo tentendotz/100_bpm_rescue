@@ -76,7 +76,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   @override
-  Future<void> dispose() async {
+  void dispose() {
     unawaited(_shakeManager.dispose());
     super.dispose();
   }

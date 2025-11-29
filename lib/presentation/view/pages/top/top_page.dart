@@ -17,6 +17,7 @@ class TopPage extends StatefulWidget {
 class _TopPageState extends State<TopPage> {
   int currentIndex = 0;
   final sampleTextEditingController = TextEditingController();
+  double topBtnWidth = AppSize.defaultBtnWidth * 1.5;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class _TopPageState extends State<TopPage> {
                   const Text(
                     'リズムでレスキュー',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: AppSize.titleTextSize,
                       fontWeight: FontWeight.bold,
                       color: AppColors.strawberryRed,
                     ),
@@ -50,39 +51,63 @@ class _TopPageState extends State<TopPage> {
                   const Text(
                     'たのしくリズムにのって、いのちをまもろう！',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: AppSize.xl,
                       color: AppColors.subtitleGray,
                     ),
                   ),
+                  SizedBox(height: AppSize.sm),
                   CommonButton(
+                    btnWidth: topBtnWidth,
                     children: Text(
                       'スタート',
-                      style: TextStyle(color: AppColors.accentColor),
+                      style: TextStyle(
+                        fontSize: AppSize.md,
+                        color: AppColors.accentColor,
+                      ),
                     ),
                     tapFunc: () {
                       context.go(AppRoutes.game);
                     },
                   ),
+
+                  /// TODO: 設定画面への遷移確認時に追加・完成時に削除
+                  // CommonButton(
+                  //   bgColor: AppColors.strawberryRed,
+                  //   children: Text(
+                  //     '設定画面へ',
+                  //     style: TextStyle(color: AppColors.accentColor),
+                  //   ),
+                  //   tapFunc: () {
+                  //     context.go(AppRoutes.setting);
+                  //   },
+                  // ),
+                  SizedBox(height: AppSize.sm),
                   CommonButton(
-                    bgColor: AppColors.strawberryRed,
-                    children: Text(
-                      '設定画面へ',
-                      style: TextStyle(color: AppColors.accentColor),
-                    ),
-                    tapFunc: () {
-                      context.go(AppRoutes.setting);
-                    },
-                  ),
-                  CommonButton(
+                    btnWidth: topBtnWidth,
                     bgColor: AppColors.strawberryRed,
                     children: Text(
                       'あそびかた',
-                      style: TextStyle(color: AppColors.accentColor),
+                      style: TextStyle(
+                        fontSize: AppSize.md,
+                        color: AppColors.accentColor,
+                      ),
                     ),
                     tapFunc: () {
                       context.go(AppRoutes.result);
                     },
                   ),
+
+                  /// TODO: 結果確認画面への遷移確認時に追加・完成時に削除
+                  // CommonButton(
+                  //   bgColor: AppColors.strawberryRed,
+                  //   children: Text(
+                  //     '結果確認画面へ',
+                  //     style: TextStyle(color: AppColors.accentColor),
+                  //   ),
+                  //   tapFunc: () {
+                  //     context.go(AppRoutes.result);
+                  //   },
+                  // ),
                 ],
               ),
             ),

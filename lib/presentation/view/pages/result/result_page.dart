@@ -33,7 +33,7 @@ class ResultPage extends StatelessWidget {
             Text(
               _isFailed ? 'ざんねん！' : 'よくできました！',
               style: TextStyle(
-                fontSize: AppSize.resultTitleTextSize,
+                fontSize: AppSize.titleTextSize,
                 fontWeight: FontWeight.bold,
               ),
             ),

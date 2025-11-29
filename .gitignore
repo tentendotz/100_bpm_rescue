@@ -60,3 +60,15 @@ dist
 
 # Optional npm cache directory
 .npm
+
+# ----- flutte pub get 自動生成ファイル -----
+# Linux関連の自動生成ファイル
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugins.cmake
+
+# macOS関連の自動生成ファイル
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Windows関連の自動生成ファイル
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugins.cmake

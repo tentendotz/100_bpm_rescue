@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 ///
-/// 仮のアプリテーマカラークラス
+/// アプリテーマカラークラス
 ///
 abstract final class AppColors {
-  static const primaryColor = Colors.blue;
-  static const secondaryColor = Colors.lightBlue;
-  static const accentColor = Colors.blueAccent;
-  static const disableColor = Colors.blueGrey;
-  static const btnTextColor = Colors.white;
+  static const aliceBlue = Color(0xfff0f8ff);
+  static const azureBlue = Color(0xff3b82f6);
+  static const accentColor = Colors.white;
 
-  static const inputBoxBorderColor = Colors.black12;
+  static const strawberryPink = Color(0xfffecaca);
+  static const strawberryRed = Color(0xffef4444);
+  static const deepSpaceBlue = Color(0xff1e293b);
 }

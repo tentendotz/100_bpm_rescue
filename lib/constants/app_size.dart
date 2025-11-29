@@ -15,7 +15,7 @@ abstract final class AppSize {
   static const double defaultBtnHeight = 40.0;
 
   // 角丸のデフォルトのサイズ
-  static const double defaultRadius = 5.0;
+  static const double defaultRadius = 45.0;
 
   // 入力欄のデフォルトの高さ
   static const double defaultInputHeight = 40.0;

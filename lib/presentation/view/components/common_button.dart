@@ -12,7 +12,7 @@ class CommonButton extends StatelessWidget {
     required this.tapFunc,
     this.btnWidth = AppSize.defaultBtnWidth,
     this.btnHeight = AppSize.defaultBtnHeight,
-    this.bgColor = AppColors.primaryColor,
+    this.bgColor = AppColors.azureBlue,
     this.radiusNum = AppSize.defaultRadius,
   });
 
@@ -20,7 +20,7 @@ class CommonButton extends StatelessWidget {
   final VoidCallback tapFunc;
   final double btnWidth;
   final double btnHeight;
-  final MaterialColor bgColor;
+  final Color bgColor;
   final double radiusNum;
 
   @override

@@ -24,31 +24,27 @@ class GuidePage extends StatelessWidget {
                 children: [
                   // ステップ1
                   SizedBox(
-                    width: 300,
+                    width: (MediaQuery.of(context).size.width / 3) - AppSize.lg,
                     child: _buildGuideStep(
                       stepNumber: '1',
                       imagePath: 'assets/images/chara/cat_speak_loudly.png',
-                      title: 'おおきなこえで よびかけ！',
+                      title: '大きな声で よびかけ！',
                       descriptions: [
                         '「だいじょうぶですかー？」',
                         'ってスマホにむかって',
-                        'おおきなこえで さけぼう！',
+                        '大きな声で さけぼう！',
                       ],
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppSize.xxs),
                   // ステップ2
                   SizedBox(
-                    width: 300,
+                    width: (MediaQuery.of(context).size.width / 3) - AppSize.lg,
                     child: _buildGuideStep(
                       stepNumber: '2',
                       imagePath: 'assets/images/chara/cat_heart_massage.png',
                       title: 'しんぞうマッサージ！',
-                      descriptions: [
-                        'スマホをりょうてでもって',
-                        'うえ↑した↓うえ↑した↓',
-                        'ブルブルしたらせいかい！',
-                      ],
+                      descriptions: ['スマホを両手でもって', '上↑下↓上↑下↓', 'ブルブルしたらせいかい！'],
                     ),
                   ),
                 ],
@@ -72,16 +68,15 @@ class GuidePage extends StatelessWidget {
               right: AppSize.zero,
               bottom: AppSize.sm,
               child: CommonButton(
-                //bgColor: AppColors.strawberryRed,
                 children: const Text(
-                  'もどる',
+                  'もちかたへ',
                   style: TextStyle(
                     fontSize: AppSize.md,
                     color: AppColors.accentColor,
                   ),
                 ),
                 tapFunc: () {
-                  context.go(AppRoutes.top);
+                  context.go(AppRoutes.gripGuide);
                 },
               ),
             ),
@@ -102,39 +97,44 @@ class GuidePage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // ステップ番号
-        Container(
-          width: AppSize.xxl,
-          height: AppSize.xxl,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.strawberryRed,
-          ),
-          child: Center(
-            child: Text(
-              stepNumber,
-              style: const TextStyle(
-                fontSize: AppSize.nm,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: AppSize.xxs),
         // キャラクター画像
         Flexible(
           child: Image.asset(imagePath, height: 200, fit: BoxFit.contain),
         ),
         const SizedBox(height: AppSize.xxs),
-        // タイトル
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: AppSize.md,
-            fontWeight: FontWeight.bold,
-            color: AppColors.deepSpaceBlue,
-          ),
+        // タイトル&ステップ番号
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: AppSize.xxs,
+          children: [
+            Container(
+              width: AppSize.xxl,
+              height: AppSize.xxl,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.strawberryRed,
+              ),
+              child: Center(
+                child: Text(
+                  stepNumber,
+                  style: const TextStyle(
+                    fontSize: AppSize.nm,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: AppSize.md,
+                fontWeight: FontWeight.bold,
+                color: AppColors.deepSpaceBlue,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: AppSize.xxs),
         // 説明文

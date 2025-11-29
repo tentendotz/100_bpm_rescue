@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:hackathon_app/constants/theme/app_colors.dart';
-import 'package:hackathon_app/utils/ruby_text.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:permission_handler/permission_handler.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hackathon_app/constants/routes/app_routes.dart';
 
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hackathon_app/constants/app_size.dart';
+import 'package:hackathon_app/constants/routes/app_routes.dart';
+import 'package:hackathon_app/constants/theme/app_colors.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class ReadyPage extends StatefulWidget {
   const ReadyPage({super.key});
@@ -55,66 +55,65 @@ class _ReadyPageState extends State<ReadyPage> {
   }
 
   Future<void> _startListening() async {
-  if (!_speech.isAvailable || !_speech.isNotListening) return;
+    if (!_speech.isAvailable || !_speech.isNotListening) return;
 
-  await _speech.listen(
-    onResult: (result) async {
-      if (!mounted) return;
-
-      setState(() {
-        _text = result.recognizedWords;
-      });
-
-      // フレーズ検出
-      if (!_foundTarget && _text.contains('大丈夫')) {
-        _foundTarget = true;
-
-        await _speech.stop();
+    await _speech.listen(
+      onResult: (result) async {
         if (!mounted) return;
-        context.go(AppRoutes.game);
-      }
 
-      // 短いフレーズ向けに完了したら再起動
-      if (result.finalResult && mounted) {
-        await _speech.stop();
-        await Future.delayed(const Duration(milliseconds: 100));
-        if (mounted) await _startListening();
-      }
-    },
-    onSoundLevelChange: (level) {
-  if (!mounted) return;
+        setState(() {
+          _text = result.recognizedWords;
+        });
 
-  double adjustedLevel = (level * 15).clamp(0, 100);
-  setState(() {
-    _soundLevel = adjustedLevel;
-  });
+        // フレーズ検出
+        if (!_foundTarget && _text.contains('大丈夫')) {
+          _foundTarget = true;
 
-  if (adjustedLevel > minVoiceLevel) {
-    _voiceCounter++;
-  } else {
-    _voiceCounter = 0;
+          await _speech.stop();
+          if (!mounted) return;
+          context.go(AppRoutes.game);
+        }
+
+        // 短いフレーズ向けに完了したら再起動
+        if (result.finalResult && mounted) {
+          await _speech.stop();
+          await Future.delayed(const Duration(milliseconds: 100));
+          if (mounted) await _startListening();
+        }
+      },
+      onSoundLevelChange: (level) {
+        if (!mounted) return;
+
+        double adjustedLevel = (level * 15).clamp(0, 100);
+        setState(() {
+          _soundLevel = adjustedLevel;
+        });
+
+        if (adjustedLevel > minVoiceLevel) {
+          _voiceCounter++;
+        } else {
+          _voiceCounter = 0;
+        }
+
+        // 3回連続（例: 数百ミリ秒）閾値以上なら声と判定
+        if (_voiceCounter >= 3) {
+          // ここで声として扱う
+          // 例: アラートや波形表示など
+          _voiceCounter = 0; // 判定後リセット
+        }
+      },
+      listenOptions: stt.SpeechListenOptions(
+        listenMode: stt.ListenMode.dictation,
+        cancelOnError: false,
+        partialResults: true,
+        // モードによっては autoPunctuation なども指定可能
+        autoPunctuation: true,
+        enableHapticFeedback: false,
+      ),
+      listenFor: const Duration(seconds: 5), // 5秒以内に短いフレーズを検出
+      pauseFor: const Duration(seconds: 1), // 一瞬止まったら自動停止
+    );
   }
-
-  // 3回連続（例: 数百ミリ秒）閾値以上なら声と判定
-  if (_voiceCounter >= 3) {
-    // ここで声として扱う
-    // 例: アラートや波形表示など
-    _voiceCounter = 0; // 判定後リセット
-  }
-},
-    listenOptions: stt.SpeechListenOptions(
-    listenMode: stt.ListenMode.dictation,
-    cancelOnError: false,
-    partialResults: true,
-    // モードによっては autoPunctuation なども指定可能
-    autoPunctuation: true,
-    enableHapticFeedback: false,
-  ),
-    listenFor: const Duration(seconds: 5), // 5秒以内に短いフレーズを検出
-    pauseFor: const Duration(seconds: 1),  // 一瞬止まったら自動停止
-  );
-}
-
 
   void _startAnimationLoop() async {
     while (mounted) {
@@ -143,12 +142,13 @@ class _ReadyPageState extends State<ReadyPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(11, (i) {
-        double factor = 0.65 +
-            sin(DateTime.now().millisecondsSinceEpoch / 180 + i) * 0.35;
+        double factor =
+            0.65 + sin(DateTime.now().millisecondsSinceEpoch / 180 + i) * 0.35;
         double height = (baseHeight * factor).abs().clamp(12, 140);
         return AnimatedContainer(
           duration: Duration(
-              milliseconds: (60 - (_soundLevel * 0.8)).clamp(20, 60).toInt()),
+            milliseconds: (60 - (_soundLevel * 0.8)).clamp(20, 60).toInt(),
+          ),
           curve: Curves.easeOut,
           margin: const EdgeInsets.symmetric(horizontal: 3),
           width: 10,
@@ -159,24 +159,6 @@ class _ReadyPageState extends State<ReadyPage> {
           ),
         );
       }),
-    );
-  }
-
-  Widget _buildRubyText() {
-    final style = const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
-    final rubyStyle = const TextStyle(fontSize: 12, color: Colors.grey);
-
-    return RubyTextRow(
-      chars: [
-        RubyChar('「', ''),
-        RubyChar('大丈夫', 'だいじょうぶ'),
-        RubyChar('ですか？」', ''),
-        RubyChar('と', ''),
-        RubyChar('声', 'こえ'),
-        RubyChar('をかけてあげよう', ''),
-      ],
-      textStyle: style,
-      rubyStyle: rubyStyle,
     );
   }
 
@@ -194,7 +176,13 @@ class _ReadyPageState extends State<ReadyPage> {
               children: [
                 _buildWaveBars(baseHeight),
                 const SizedBox(height: 40),
-                _buildRubyText(),
+                Text(
+                  '「大丈夫ですか？」と声をかけてあげよう！',
+                  style: TextStyle(
+                    fontSize: AppSize.lg,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ),

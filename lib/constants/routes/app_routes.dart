@@ -8,4 +8,5 @@ abstract class AppRoutes {
   static const result = '/result';
   static const setting = '/setting';
   static const guide = '/guide';
+  static const gripGuide = '/gripGuide';
 }

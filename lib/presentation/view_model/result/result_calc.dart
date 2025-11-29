@@ -23,7 +23,7 @@ class ResultCalc {
   String calcResultDetailToString() {
     final calcResultNum = calculateCountInSixtySeconds();
     if (calcResultNum < 100 || calcResultNum == 0) {
-      return '遅すぎます…';
+      return 'おそすぎます…';
     } else if (calcResultNum > 120) {
       return '早すぎます…';
     }

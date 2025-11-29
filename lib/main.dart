@@ -3,7 +3,6 @@ import 'package:hackathon_app/constants/app_size.dart';
 import 'package:hackathon_app/constants/theme/app_colors.dart';
 import 'package:hackathon_app/presentation/view/components/bottom_nav.dart';
 import 'package:hackathon_app/presentation/view/components/common_button.dart';
-import 'package:hackathon_app/presentation/view/components/common_textfield.dart';
 import 'package:hackathon_app/presentation/view/model/bottom_nav_item_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,7 +19,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.aliceBlue,
+          surface: AppColors.aliceBlue,
+        ),
+        scaffoldBackgroundColor: AppColors.aliceBlue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -44,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: AppColors.aliceBlue,
         title: Text(widget.title),
       ),
       body: Center(
@@ -53,16 +56,20 @@ class _MyHomePageState extends State<MyHomePage> {
           spacing: AppSize.sm,
           children: <Widget>[
             const Text('ここから共通コンポーネントのサンプル'),
-            CommonTextfield(
-              controller: sampleTextEditingController,
-              changeFunc: (value) {
-                debugPrint(value);
+            CommonButton(
+              children: Text(
+                '青いボタン',
+                style: TextStyle(color: AppColors.accentColor),
+              ),
+              tapFunc: () {
+                debugPrint('サンプルだってば');
               },
             ),
             CommonButton(
+              bgColor: AppColors.strawberryRed,
               children: Text(
-                'サンプルだよ',
-                style: TextStyle(color: AppColors.btnTextColor),
+                '赤いボタン',
+                style: TextStyle(color: AppColors.accentColor),
               ),
               tapFunc: () {
                 debugPrint('サンプルだってば');

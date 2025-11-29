@@ -1,17 +1,39 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/constants/theme/app_colors.dart';
 
 ///
 /// 心拍波形コンポーネント
 ///
+class HeartbeatWaveController {
+  HeartbeatWaveController();
+
+  VoidCallback? _onTriggerPulse;
+
+  void _attach(VoidCallback trigger) {
+    _onTriggerPulse = trigger;
+  }
+
+  void _detach(VoidCallback trigger) {
+    if (_onTriggerPulse == trigger) {
+      _onTriggerPulse = null;
+    }
+  }
+
+  void triggerPulse() {
+    _onTriggerPulse?.call();
+  }
+}
+
 class HeartbeatWave extends StatefulWidget {
   final double bpm; // beats per minute
   final Color waveColor;
   final double baseAmplitude;
   final double waveSpeed; // how fast the baseline wave scrolls (seconds)
   final double frequency; // baseline wave cycles across the width
+  final HeartbeatWaveController? controller;
 
   const HeartbeatWave({
     super.key,
@@ -20,6 +42,7 @@ class HeartbeatWave extends StatefulWidget {
     this.baseAmplitude = 18,
     this.waveSpeed = 2.0,
     this.frequency = 1.5,
+    this.controller,
   });
 
   @override
@@ -48,36 +71,48 @@ class _HeartbeatWaveState extends State<HeartbeatWave>
       vsync: this,
       duration: const Duration(milliseconds: 420),
     );
-
+    _pulseController.addStatusListener(_handlePulseStatus);
     // Start a periodic timer to trigger the beat based on bpm
-    _startBeatTimer();
+    // _startBeatTimer();
+    widget.controller?._attach(_triggerPulse);
   }
 
-  void _startBeatTimer() {
-    final intervalMs = (60000 / widget.bpm).round();
-    _beatTimer?.cancel();
-    // trigger immediately then periodically
-    _triggerPulse();
-    _beatTimer = Timer.periodic(Duration(milliseconds: intervalMs), (_) {
-      _triggerPulse();
-    });
-  }
+  // void _startBeatTimer() {
+  //   final intervalMs = (60000 / widget.bpm).round();
+  //   _beatTimer?.cancel();
+  //   // trigger immediately then periodically
+  //   _triggerPulse();
+  //   _beatTimer = Timer.periodic(Duration(milliseconds: intervalMs), (_) {
+  //     _triggerPulse();
+  //   });
+  // }
 
   void _triggerPulse() {
     // Make the pulse animation go forward from 0.
     // We use a non-blocking forward and it will naturally ease out.
     unawaited(_pulseController.forward(from: 0.0));
   }
+  void _handlePulseStatus(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      unawaited(_pulseController.reverse());
+    }
+  }
 
   @override
   void didUpdateWidget(covariant HeartbeatWave oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.bpm != widget.bpm) {
-      _startBeatTimer();
+    // if (oldWidget.bpm != widget.bpm) {
+    //   _startBeatTimer();
+    // }
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller?._detach(_triggerPulse);
+      widget.controller?._attach(_triggerPulse);
     }
     if ((oldWidget.waveSpeed != widget.waveSpeed) ||
         (oldWidget.frequency != widget.frequency)) {
-      _phaseController.duration = Duration(milliseconds: (widget.waveSpeed * 1000).round());
+      _phaseController.duration = Duration(
+        milliseconds: (widget.waveSpeed * 1000).round(),
+      );
       if (!_phaseController.isAnimating) {
         unawaited(_phaseController.repeat());
       }
@@ -86,8 +121,10 @@ class _HeartbeatWaveState extends State<HeartbeatWave>
 
   @override
   void dispose() {
+    widget.controller?._detach(_triggerPulse);
     _beatTimer?.cancel();
     _phaseController.dispose();
+    _pulseController.removeStatusListener(_handlePulseStatus);
     _pulseController.dispose();
     super.dispose();
   }
@@ -174,7 +211,7 @@ class _HeartbeatPainter extends CustomPainter {
       // The spike is narrow and high compared to baseline.
       final double distance = (x - spikeX).abs();
       final double sigma = max(6.0, w * 0.02); // determines spike width
-      final double gauss = exp(- (distance * distance) / (2 * sigma * sigma));
+      final double gauss = exp(-(distance * distance) / (2 * sigma * sigma));
       final double spikeHeight = baseAmp * 6.0; // how tall the spike is
       y += gauss * spikeHeight * Curves.easeOut.transform(pulse);
 
@@ -188,7 +225,9 @@ class _HeartbeatPainter extends CustomPainter {
         final double prevT = (prevX / w) * twoPi * freq + phase * twoPi;
         double prevY = sin(prevT) * baseAmp;
         final double prevDistance = (prevX - spikeX).abs();
-        final double prevGauss = exp(- (prevDistance * prevDistance) / (2 * sigma * sigma));
+        final double prevGauss = exp(
+          -(prevDistance * prevDistance) / (2 * sigma * sigma),
+        );
         prevY += prevGauss * spikeHeight * Curves.easeOut.transform(pulse);
         final double prevDy = centerY - prevY;
 

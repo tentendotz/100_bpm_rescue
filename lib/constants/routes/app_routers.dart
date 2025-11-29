@@ -29,9 +29,9 @@ abstract class AppRouters {
       GoRoute(
         path: AppRoutes.result,
         builder: (context, state) {
-          // TODO　ゲーム画面から行った回数と計測時間を渡す
-          // spendTimeはデフォルト値に60が入っているので必要な時だけ追加する
-          final (spendTime, countNum) = state.extra as (int, int);
+          // ゲーム画面から行った回数と計測時間を渡す
+          final extra = state.extra as Map<String, int>?;
+          final countNum = extra?['countNum'] ?? 0;
           return ResultPage(countNum: countNum);
         },
       ),

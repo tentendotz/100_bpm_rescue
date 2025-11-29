@@ -11,4 +11,5 @@ abstract final class AppColors {
   static const strawberryPink = Color(0xfffecaca);
   static const strawberryRed = Color(0xffef4444);
   static const deepSpaceBlue = Color(0xff1e293b);
+  static const subtitleGray = Color(0xff6b7280);
 }

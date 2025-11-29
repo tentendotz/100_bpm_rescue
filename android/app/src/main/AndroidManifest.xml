@@ -2,7 +2,7 @@
 <!-- マイク権限を追加 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
-        android:label="hackathon_app"
+        android:label="リズムでレスキュー"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

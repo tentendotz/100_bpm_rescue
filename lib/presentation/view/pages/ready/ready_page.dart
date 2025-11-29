@@ -25,7 +25,7 @@ class ReadyPage extends StatelessWidget {
                 style: TextStyle(color: AppColors.accentColor),
               ),
               tapFunc: () {
-                context.go(AppRoutes.top);
+                context.go(AppRoutes.game);
               },
             ),
           ],

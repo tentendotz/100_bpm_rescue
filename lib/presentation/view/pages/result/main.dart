@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hackathon_app/constants/routes/app_routes.dart';
+import 'package:hackathon_app/constants/theme/app_colors.dart';
+import 'package:hackathon_app/presentation/view/components/common_button.dart';
 
 ///
 /// ゲームのリザルト画面
@@ -8,6 +12,25 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('リザルト画面');
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('ここはリザルト画面'),
+            CommonButton(
+              bgColor: AppColors.strawberryRed,
+              children: Text(
+                'topへ',
+                style: TextStyle(color: AppColors.accentColor),
+              ),
+              tapFunc: () {
+                context.go(AppRoutes.top);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

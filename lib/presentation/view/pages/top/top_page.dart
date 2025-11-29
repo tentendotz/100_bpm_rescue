@@ -15,8 +15,6 @@ class TopPage extends StatefulWidget {
 }
 
 class _TopPageState extends State<TopPage> {
-  int currentIndex = 0;
-  final sampleTextEditingController = TextEditingController();
   double topBtnWidth = AppSize.defaultBtnWidth * 1.5;
 
   @override
@@ -66,19 +64,19 @@ class _TopPageState extends State<TopPage> {
                       ),
                     ),
                     tapFunc: () {
-                      context.go(AppRoutes.game);
+                      context.go(AppRoutes.ready);
                     },
                   ),
 
-                  /// TODO: 設定画面への遷移確認時に追加・完成時に削除
+                  /// TODO: 心臓マッサージ画面への遷移確認時に追加・完成時に削除
                   // CommonButton(
                   //   bgColor: AppColors.strawberryRed,
                   //   children: Text(
-                  //     '設定画面へ',
+                  //     '心臓マッサージ画面へ',
                   //     style: TextStyle(color: AppColors.accentColor),
                   //   ),
                   //   tapFunc: () {
-                  //     context.go(AppRoutes.setting);
+                  //     context.go(AppRoutes.game);
                   //   },
                   // ),
                   SizedBox(height: AppSize.sm),

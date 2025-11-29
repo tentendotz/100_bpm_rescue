@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:hackathon_app/constants/theme/app_colors.dart';
 
 ///
 /// 心拍波形コンポーネント
@@ -138,7 +139,9 @@ class _HeartbeatPainter extends CustomPainter {
     if (w <= 0 || h <= 0) return;
 
     // configure paint
-    _paint.color = color;
+    final bool isPulsing = pulse > 0.3; // threshold to highlight beat moment
+    final Color strokeColor = isPulsing ? AppColors.strawberryRed : color;
+    _paint.color = strokeColor;
     _paint.strokeWidth = max(2.0, size.height * 0.018);
 
     final centerY = h / 2;
@@ -194,7 +197,7 @@ class _HeartbeatPainter extends CustomPainter {
 
     // Optionally draw a subtle glow / background line (thin)
     final Paint bgPaint = Paint()
-      ..color = color.withAlpha((255 * 0.12).round())
+      ..color = strokeColor.withAlpha((255 * 0.12).round())
       ..style = PaintingStyle.stroke
       ..strokeWidth = _paint.strokeWidth * 1.6;
     canvas.drawPath(path, bgPaint);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/constants/theme/app_colors.dart';
-import 'package:hackathon_app/presentation/view/pages/game/components/HeartBeatwave.dart';
+import 'package:hackathon_app/presentation/view/pages/game/components/HeartbeatWave.dart';
 ///
 /// ゲーム画面
 ///
@@ -23,7 +23,7 @@ class GamePage extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   child: HeartbeatWave(
                     bpm: optimalBpm,
-                    waveColor: AppColors.deepSpaceBlue,
+                    waveColor: AppColors.azureBlue,
                   ),
                 ),
               ),

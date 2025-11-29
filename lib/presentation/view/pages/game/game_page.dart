@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hackathon_app/constants/app_size.dart';
@@ -75,7 +77,7 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Future<void> dispose() async {
-    await _shakeManager.dispose();
+    unawaited(_shakeManager.dispose());
     super.dispose();
   }
 

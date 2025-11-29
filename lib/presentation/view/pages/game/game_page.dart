@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/constants/theme/app_colors.dart';
-import 'package:hackathon_app/presentation/view/pages/game/components/HeartbeatWave.dart';
+import 'package:hackathon_app/presentation/view/pages/game/components/heart_beat_wave.dart';
 ///
 /// ゲーム画面
 ///

@@ -7,6 +7,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // google_fontsのランタイムダウンロードを無効化（ネットワークエラー防止）
+  GoogleFonts.config.allowRuntimeFetching = false;
+
   await SystemChrome.setPreferredOrientations([
     // 縦向き
     DeviceOrientation.landscapeLeft,
@@ -30,7 +34,8 @@ class MyApp extends StatelessWidget {
           surface: AppColors.aliceBlue,
         ),
         scaffoldBackgroundColor: AppColors.aliceBlue,
-        textTheme: GoogleFonts.notoSansJpTextTheme(),
+        // システムフォントを使用（ネットワーク不要）
+        fontFamily: 'Hiragino Sans',
       ),
       routerConfig: AppRouters.router,
     );

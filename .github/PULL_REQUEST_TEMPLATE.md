@@ -1,5 +1,12 @@
-### この PR で対応したこと
-- 
+<!-- Thank you for contributing! -->
 
-### その他
-<!-- 特になければ、項目ごと削除して問題ありません -->
+Description
+----------------------------------------
+<!-- Please do not leave this blank. -->
+<!-- This PR [adds/removes/fixes/replaces] the [feature/bug/etc]. -->
+
+
+### Additional context
+<!-- Is there anything specific you'd like the reviewers to focus on? -->
+
+___

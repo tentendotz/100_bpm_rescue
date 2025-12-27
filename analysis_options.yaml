@@ -1,0 +1,20 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    - custom_lint
+
+linter:
+  rules:
+    - prefer_single_quotes
+    - annotate_overrides
+    - discarded_futures
+    - unawaited_futures
+
+custom_lint:
+  enable_all_lint_rules: false
+  rules:
+    - missing_provider_scope
+    - functional_ref
+    - notifier_extends
+    - notifier_build

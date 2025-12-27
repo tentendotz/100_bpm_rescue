@@ -1,0 +1,53 @@
+import 'package:go_router/go_router.dart';
+import 'package:hackathon_app/constants/routes/app_routes.dart';
+import 'package:hackathon_app/presentation/view/pages/game/game_page.dart';
+import 'package:hackathon_app/presentation/view/pages/guide/grip_guide_page.dart';
+import 'package:hackathon_app/presentation/view/pages/guide/guide_page.dart';
+import 'package:hackathon_app/presentation/view/pages/ready/ready_page.dart';
+import 'package:hackathon_app/presentation/view/pages/result/result_page.dart';
+import 'package:hackathon_app/presentation/view/pages/setting/setting_page.dart';
+import 'package:hackathon_app/presentation/view/pages/top/top_page.dart';
+
+///
+/// アプリの画面遷移を定義するクラス
+///
+abstract class AppRouters {
+  static final GoRouter router = GoRouter(
+    initialLocation: AppRoutes.top,
+    routes: [
+      GoRoute(
+        path: AppRoutes.top,
+        builder: (context, state) => const TopPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.ready,
+        builder: (context, state) => const ReadyPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.game,
+        builder: (context, state) => const GamePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.result,
+        builder: (context, state) {
+          // ゲーム画面から行った回数と計測時間を渡す
+          final extra = state.extra as Map<String, int>?;
+          final countNum = extra?['countNum'] ?? 0;
+          return ResultPage(countNum: countNum);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.setting,
+        builder: (context, state) => const SettingPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.guide,
+        builder: (context, state) => const GuidePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.gripGuide,
+        builder: (context, state) => const GripGuidePage(),
+      ),
+    ],
+  );
+}

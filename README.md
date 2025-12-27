@@ -1,7 +1,8 @@
 100_bpm_rescue (Rhythm de Rescue)
 ==================================
 
-![Flutter](https://img.shields.io/badge/Flutter-3.38%2B-blue?logo=flutter)
+[![Flutter](https://img.shields.io/badge/Flutter-3.38%2B-blue?logo=flutter)](https://github.com/flutter/flutter)
+[![Flutter CI](https://github.com/tentendotz/100_bpm_rescue/actions/workflows/flutter_ci.yml/badge.svg)](https://github.com/tentendotz/100_bpm_rescue/actions/workflows/flutter_ci.yml)
 
 **100_bpm_rescue** (Japanese Title: リズムでレスキュー) is an educational application designed to help children learn the correct rhythm for CPR (Cardiopulmonary Resuscitation) through an interactive experience.
 
